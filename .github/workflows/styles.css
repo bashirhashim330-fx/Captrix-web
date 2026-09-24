@@ -1,0 +1,468 @@
+
+    /* Technical & Financial Layout Foundations */
+    * {
+      border-color: #1f2433;
+    }
+    body {
+      background-color: #0b0c10;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      selection-background-color: #11D6FF;
+      selection-color: #0b0c10;
+    }
+    ::selection {
+      background: #11D6FF;
+      color: #0b0c10;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0c10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2433;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #11D6FF;
+    }
+    /* Engineering grid texture */
+    .tech-grid {
+      background-image: linear-gradient(to right, rgba(31, 36, 51, 0.35) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(31, 36, 51, 0.35) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .tech-dots {
+      background-image: radial-gradient(rgba(17, 214, 255, 0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .text-glow-cyan {
+      text-shadow: 0 0 15px rgba(17, 214, 255, 0.6);
+    }
+    .border-glow-cyan {
+      box-shadow: 0 0 15px rgba(17, 214, 255, 0.2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  
+
+/* =========================================================
+   CAPTRIX STRUCTURED BUILD — RESPONSIVE / THEME PATCHES
+   ========================================================= */
+.dashboard-topbar { overflow: visible; }
+.dashboard-account-switch { max-width: min(42vw, 520px); }
+.dashboard-account-select { max-width: min(42vw, 420px); min-width: 0; text-overflow: ellipsis; white-space: nowrap; }
+.dashboard-menu-lines { display:flex; width:20px; height:18px; flex-direction:column; justify-content:space-between; }
+.dashboard-menu-lines i { display:block; height:2px; width:100%; border-radius:99px; background:currentColor; }
+.dashboard-theme-toggle { flex: 0 0 auto; }
+
+/* Theme tokens */
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="light"] body { background:#f4f7fb !important; color:#172033 !important; }
+html[data-theme="light"] .dashboard-app { background:#f4f7fb !important; color:#172033 !important; }
+html[data-theme="light"] .dashboard-app .bg-bg { background:#f4f7fb !important; }
+html[data-theme="light"] .dashboard-app .bg-surface { background:#ffffff !important; }
+html[data-theme="light"] .dashboard-app .bg-surface-elevated { background:#f7f9fc !important; }
+html[data-theme="light"] .dashboard-app .bg-surface-subtle { background:#eef3f8 !important; }
+html[data-theme="light"] .dashboard-app .text-white { color:#111827 !important; }
+html[data-theme="light"] .dashboard-app .text-slate-200 { color:#273449 !important; }
+html[data-theme="light"] .dashboard-app .text-slate-300 { color:#3c4b62 !important; }
+html[data-theme="light"] .dashboard-app .text-slate-400 { color:#64748b !important; }
+html[data-theme="light"] .dashboard-app .text-slate-500 { color:#718096 !important; }
+html[data-theme="light"] .dashboard-app .border-surface-border { border-color:#d8e0eb !important; }
+html[data-theme="light"] .dashboard-app .border-surface-border\/40 { border-color:rgba(216,224,235,.4) !important; }
+html[data-theme="light"] .dashboard-app select,
+html[data-theme="light"] .dashboard-app input,
+html[data-theme="light"] .dashboard-app textarea { color:#172033 !important; background:#f8fafc !important; }
+html[data-theme="light"] .dashboard-app .bg-bg\/80 { background:rgba(244,247,251,.82) !important; }
+
+@media (max-width: 1023px) {
+  .dashboard-topbar { min-height:64px; }
+  .dashboard-account-switch { max-width:calc(100vw - 210px); }
+  .dashboard-account-select { max-width:100%; width:min(300px, 100%); }
+}
+
+@media (max-width: 640px) {
+  .dashboard-topbar { padding-left:10px !important; padding-right:10px !important; gap:6px; }
+  .dashboard-account-switch { max-width:calc(100vw - 175px); }
+  .dashboard-account-select { width:100%; font-size:10px !important; padding-left:8px !important; padding-right:8px !important; }
+  .dashboard-topbar > div:first-child { min-width:0; flex:1 1 auto; }
+  .dashboard-topbar > div:last-child { flex:0 0 auto; gap:4px !important; }
+  .dashboard-theme-toggle { padding:8px !important; }
+  .dashboard-theme-toggle span { display:none !important; }
+  .dashboard-topbar .dashboard-account-switch span { display:none !important; }
+  .dashboard-topbar .dashboard-account-switch select { min-width:0; }
+  .dashboard-topbar button { min-height:38px; }
+}
+
+@media (max-width: 380px) {
+  .dashboard-account-switch { max-width:calc(100vw - 154px); }
+  .dashboard-account-select { font-size:9px !important; }
+  .dashboard-topbar > div:last-child { gap:2px !important; }
+  .dashboard-topbar .dashboard-theme-toggle { padding:7px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-topbar *, .dashboard-app * { scroll-behavior:auto !important; }
+}
+
+/* =========================================================
+   CAPTRIX THEME CONSISTENCY PATCH
+   Fixes translucent/blurred surfaces and controls when the
+   dashboard switches between Dark / Light / System themes.
+   ========================================================= */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+  background: #0b0c10 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Light theme: apply to the whole application, not only the dashboard. */
+html[data-theme="light"] {
+  color-scheme: light;
+  background: #f4f7fb;
+}
+
+html[data-theme="light"] body {
+  background: #f4f7fb !important;
+  color: #172033 !important;
+}
+
+/* Core surfaces, including translucent variants. */
+html[data-theme="light"] .bg-bg { background: #f4f7fb !important; }
+html[data-theme="light"] .bg-bg\/80 { background: rgba(244,247,251,.82) !important; }
+html[data-theme="light"] .bg-bg\/85 { background: rgba(244,247,251,.90) !important; }
+
+html[data-theme="light"] .bg-surface { background: #ffffff !important; }
+html[data-theme="light"] .bg-surface\/60 { background: rgba(255,255,255,.72) !important; }
+html[data-theme="light"] .bg-surface-elevated { background: #f8fafc !important; }
+html[data-theme="light"] .bg-surface-elevated\/40 { background: rgba(248,250,252,.78) !important; }
+html[data-theme="light"] .bg-surface-elevated\/50 { background: rgba(248,250,252,.86) !important; }
+html[data-theme="light"] .bg-surface-subtle { background: #eef3f8 !important; }
+
+/* Text hierarchy. */
+html[data-theme="light"] .text-white { color: #111827 !important; }
+html[data-theme="light"] .text-slate-200 { color: #273449 !important; }
+html[data-theme="light"] .text-slate-300 { color: #3c4b62 !important; }
+html[data-theme="light"] .text-slate-400 { color: #64748b !important; }
+html[data-theme="light"] .text-slate-500 { color: #718096 !important; }
+html[data-theme="light"] .text-bg { color: #172033 !important; }
+
+/* Borders and dividers. */
+html[data-theme="light"] .border-surface-border { border-color: #d8e0eb !important; }
+html[data-theme="light"] .border-surface-border\/40 { border-color: rgba(216,224,235,.40) !important; }
+html[data-theme="light"] .border-surface-border\/50 { border-color: rgba(216,224,235,.55) !important; }
+html[data-theme="light"] .divide-surface-border\/50 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(216,224,235,.55) !important; }
+html[data-theme="light"] .border-slate-500 { border-color: #94a3b8 !important; }
+html[data-theme="light"] .border-slate-600 { border-color: #cbd5e1 !important; }
+html[data-theme="light"] .border-slate-700 { border-color: #d8e0eb !important; }
+
+/* Inputs/selects/textareas must not keep browser-dark/white mismatches. */
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  color: #172033 !important;
+  background-color: #ffffff !important;
+  border-color: #d8e0eb !important;
+  color-scheme: light;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  color-scheme: dark;
+}
+
+/* Preserve semantic financial colors in light mode. */
+html[data-theme="light"] .text-fin-profit { color: #078b62 !important; }
+html[data-theme="light"] .text-fin-loss { color: #dc3545 !important; }
+html[data-theme="light"] .text-fin-warning { color: #b45309 !important; }
+
+/* Blurred/glass surfaces: remove the accidental milky-white appearance. */
+html[data-theme="light"] .backdrop-blur-xl,
+html[data-theme="light"] .backdrop-blur-lg,
+html[data-theme="light"] .backdrop-blur-md,
+html[data-theme="light"] .backdrop-blur-sm {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* Modal backdrop and overlays. */
+html[data-theme="light"] .bg-bg\/85.backdrop-blur-md {
+  background: rgba(15,23,42,.42) !important;
+}
+
+/* Theme toggle itself stays readable in both themes. */
+html[data-theme="light"] .dashboard-theme-toggle {
+  background: #ffffff !important;
+  border-color: #d8e0eb !important;
+  color: #475569 !important;
+}
+html[data-theme="light"] .dashboard-theme-toggle:hover {
+  color: #0284c7 !important;
+  border-color: rgba(17,214,255,.55) !important;
+}
+
+/* Avoid native select arrows/controls looking out of place. */
+html[data-theme="light"] option {
+  background: #ffffff;
+  color: #172033;
+}
+html[data-theme="dark"] option {
+  background: #12141c;
+  color: #e2e8f0;
+}
+
+/* =========================================================
+   CAPTRIX BRAND PALETTE + LIQUID GLASS + "LAMBO" LAYER (v2)
+   Same brand tokens in both themes: obsidian #0b0c10 / cyan #11D6FF / blue #1478FF.
+   Glass = translucency + specular edge + sheen. Real backdrop-filter is used only
+   on overlays/header (never on panels: it would trap position:fixed children).
+   ========================================================= */
+:root{--cx-cyan:#11D6FF;--cx-blue:#1478FF;--cx-glass:rgba(22,26,38,.58);--cx-glass-hi:rgba(255,255,255,.10);--cx-inset:rgba(0,0,0,.22);--cx-edge:rgba(255,255,255,.20);--cx-edge-lo:rgba(17,214,255,.16);--cx-shadow:0 18px 48px -18px rgba(0,0,0,.75);--cx-miss:rgba(255,255,255,.035);--cx-line:rgba(255,255,255,.16);--cx-ink:#EEF2F8;--cx-mute:#8a95a8;--cx-scrim:rgba(6,8,12,.62)}
+html[data-theme="light"]{--cx-glass:rgba(255,255,255,.58);--cx-glass-hi:rgba(255,255,255,.95);--cx-inset:rgba(255,255,255,.5);--cx-edge:rgba(255,255,255,.98);--cx-edge-lo:rgba(20,120,255,.20);--cx-shadow:0 18px 44px -18px rgba(20,90,140,.38);--cx-miss:rgba(10,30,48,.05);--cx-line:rgba(10,30,48,.18);--cx-ink:#0a1a24;--cx-mute:#4b6075;--cx-scrim:rgba(10,30,48,.35)}
+html{background:radial-gradient(60% 45% at 92% -6%,rgba(17,214,255,.13),transparent 70%),radial-gradient(55% 45% at -6% 62%,rgba(20,120,255,.10),transparent 70%),#0b0c10;background-attachment:fixed}
+html[data-theme="light"]{background:radial-gradient(60% 45% at 92% -6%,rgba(17,214,255,.36),transparent 70%),radial-gradient(55% 45% at -6% 62%,rgba(20,120,255,.22),transparent 70%),#e9f6fb;background-attachment:fixed}
+html body,html[data-theme] body{background:transparent!important}
+#root .min-h-screen.bg-bg,#root .dashboard-app{background:transparent!important}
+/* glass surfaces (both themes) */
+#root :is(.bg-surface,.bg-surface-elevated,.bg-surface-card,.bg-surface\/60,.cx-glass){background:linear-gradient(140deg,var(--cx-glass-hi),transparent 45%),var(--cx-glass)!important;box-shadow:inset 0 1px 0 var(--cx-edge),inset 0 0 0 1px var(--cx-edge-lo),var(--cx-shadow)}
+#root :is(.bg-surface-subtle,.bg-surface-elevated\/40,.bg-surface-elevated\/50,.cx-inset){background:var(--cx-inset)!important;box-shadow:inset 0 1px 0 var(--cx-edge-lo)}
+#root :is(.fixed,.absolute).bg-surface{background:linear-gradient(140deg,var(--cx-glass-hi),transparent 45%),color-mix(in srgb,var(--cx-glass) 40%,#0b0c10)!important}
+html[data-theme="light"] #root :is(.fixed,.absolute).bg-surface{background:#ffffffee!important}
+#root :is(.backdrop-blur-sm,.backdrop-blur-md,.backdrop-blur-lg,.backdrop-blur-xl){-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6)}
+/* Lambo layer: cut corners, HUD brackets, liquid primary buttons */
+#root [class*="rounded-2xl"]{border-radius:22px 6px 22px 6px!important}
+#root [class*="rounded-xl"]{border-radius:14px 4px 14px 4px!important}
+#root :is(.bg-surface,.cx-glass)[class*="rounded-2xl"]{background:linear-gradient(var(--cx-cyan),var(--cx-cyan)) 100% 0/16px 2px no-repeat,linear-gradient(var(--cx-cyan),var(--cx-cyan)) 100% 0/2px 16px no-repeat,linear-gradient(var(--cx-cyan),var(--cx-cyan)) 0 100%/16px 2px no-repeat,linear-gradient(var(--cx-cyan),var(--cx-cyan)) 0 100%/2px 16px no-repeat,linear-gradient(140deg,var(--cx-glass-hi),transparent 45%),var(--cx-glass)!important}
+#root [class*="from-brand-cyan"][class*="to-brand-blue"]:not(.bg-clip-text),#root [class*="from-brand-cyan"][class*="via-brand-blue"]:not(.bg-clip-text){box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -10px 18px -10px rgba(20,120,255,.7),0 10px 30px -10px rgba(17,214,255,.6)!important;border-radius:6px 16px 6px 16px!important;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+#root :focus-visible{outline:2px solid var(--cx-cyan);outline-offset:2px}
+/* light theme keeps the same cyan/blue identity, with AA-safe text shades */
+html[data-theme="light"] #root .text-brand-cyan{color:#007ba8!important}
+html[data-theme="light"] #root .text-brand-blue{color:#0f5fd6!important}
+html[data-theme="light"] .dashboard-app .bg-surface,html[data-theme="light"] .dashboard-app .bg-surface-elevated{background:linear-gradient(140deg,var(--cx-glass-hi),transparent 45%),var(--cx-glass)!important}
+/* Spin & Win */
+.cx-scrim{background:var(--cx-scrim);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cx-pop{animation:cxPop .28s cubic-bezier(.22,1,.36,1)}
+@keyframes cxPop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cx-wheel-rim{fill:var(--cx-inset);stroke:var(--cx-line)}
+.cx-seg-prize{fill:url(#cxPrize);stroke:var(--cx-line)}
+.cx-seg-miss{fill:var(--cx-miss);stroke:var(--cx-line)}
+.cx-seg-line{stroke:var(--cx-line)}
+.cx-txt-prize{fill:var(--cx-ink)}.cx-txt-miss{fill:var(--cx-mute)}
+@media (max-width:640px){#root [class*="rounded-2xl"]{border-radius:18px 5px 18px 5px!important}}
+@media (prefers-reduced-motion:reduce){.cx-pop{animation:none}}
+
+/* ---- Logo (theme-aware), menu button, right-hand drawer ---- */
+.cx-logo img{display:block}.cx-logo-light{display:none!important}
+html[data-theme="light"] .cx-logo-light{display:block!important}html[data-theme="light"] .cx-logo-dark{display:none!important}
+.cx-grad-text{background:linear-gradient(90deg,#11D6FF,#1478FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+[id]{scroll-margin-top:88px}
+.cx-burger,.cx-icon-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;color:var(--cx-ink);border:1px solid var(--cx-edge-lo);background:var(--cx-glass);border-radius:14px 4px 14px 4px;cursor:pointer;box-shadow:inset 0 1px 0 var(--cx-edge)}
+.cx-burger{flex-direction:column;align-items:flex-end;gap:5px;padding:0 11px}
+.cx-burger span{display:block;height:2px;width:22px;border-radius:2px;background:currentColor;transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.cx-burger span:nth-child(3){transform:scaleX(.6);transform-origin:right}
+@media(hover:hover){.cx-burger:hover span:nth-child(3){transform:none}.cx-burger:hover,.cx-icon-btn:hover{border-color:var(--cx-cyan)}}
+#root .cx-drawer{border-radius:22px 0 0 6px!important;border-left:1px solid var(--cx-edge-lo);-webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);animation:cxDrawer .34s cubic-bezier(.32,.72,0,1)}
+html:not([data-theme="light"]) #root .cx-drawer{background:linear-gradient(140deg,rgba(255,255,255,.08),transparent 45%),rgba(14,17,26,.82)!important}
+html[data-theme="light"] #root .cx-drawer{background:linear-gradient(140deg,rgba(255,255,255,.95),transparent 45%),rgba(255,255,255,.8)!important}
+@keyframes cxDrawer{from{transform:translateX(100%)}to{transform:none}}
+@keyframes cxRise{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.cx-nav-item{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:14px 8px 14px 18px;border-bottom:1px solid var(--cx-edge-lo);animation:cxRise .4s cubic-bezier(.22,1,.36,1) both}
+.cx-nav-item::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;background:var(--cx-cyan);transform:skewY(-18deg) scaleY(.3);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.cx-nav-item:focus-visible::before{transform:skewY(-18deg)}
+@media(hover:hover){.cx-nav-item:hover::before{transform:skewY(-18deg)}}
+@media(prefers-reduced-motion:reduce){#root .cx-drawer,.cx-nav-item{animation:none}}
+
+/* ---- v4: theme text fixes + back-to-top ---- */
+/* ---- v5: stable gradient/liquid text rendering in BOTH themes ----
+   Keep gradient text independent from the liquid-glass panel/button rules.
+   Explicitly define the gradient in dark mode as well as light mode so text
+   never becomes transparent when the theme changes. */
+#root .bg-clip-text,
+#root .cx-grad-text{
+  box-shadow:none!important;
+  text-shadow:none!important;
+  border-radius:0!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  color:transparent!important;
+  background-image:linear-gradient(110deg,#11D6FF 0%,#1478FF 45%,#11D6FF 75%,#1478FF 100%)!important;
+  background-size:220% 100%!important;
+  background-position:0% 50%;
+  animation:cxLiquidText 5s ease-in-out infinite;
+}
+
+/* Light mode uses darker brand stops for reliable contrast on the pale surface. */
+html[data-theme="light"] #root .bg-clip-text,
+html[data-theme="light"] #root .cx-grad-text{
+  background-image:linear-gradient(110deg,#0088b5 0%,#1567e8 45%,#0088b5 75%,#1567e8 100%)!important;
+}
+
+@keyframes cxLiquidText{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #root .bg-clip-text,
+  #root .cx-grad-text{animation:none}
+}
+html[data-theme="light"] #root .hover\:text-white:hover{color:#0a1a24!important}
+html[data-theme="light"] #root .text-slate-400{color:#4d5f74!important}
+html[data-theme="light"] #root .text-slate-500{color:#5b6b80!important}
+html[data-theme="light"] #root .text-slate-300{color:#33465c!important}
+html[data-theme="light"] #root .text-fin-profit{color:#067a56!important}
+html[data-theme="light"] #root .text-fin-loss{color:#c22e3e!important}
+html[data-theme="light"] #root .text-fin-warning{color:#a04a08!important}
+html[data-theme="light"] #root .text-glow-cyan{text-shadow:none}
+html[data-theme="light"] .tech-grid{background-image:linear-gradient(to right,rgba(20,120,255,.09) 1px,transparent 1px),linear-gradient(to bottom,rgba(20,120,255,.09) 1px,transparent 1px)}
+html[data-theme="light"] .tech-dots{background-image:radial-gradient(rgba(20,120,255,.16) 1px,transparent 1px)}
+html[data-theme="light"] ::-webkit-scrollbar-track{background:#e9f6fb}
+html[data-theme="light"] ::-webkit-scrollbar-thumb{background:#b8cddb}
+html[data-theme="light"] #root svg line[stroke="#1f2433"]{stroke:rgba(10,30,48,.16)}
+.cx-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:40;width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:var(--cx-cyan);cursor:pointer;border:1px solid var(--cx-edge-lo);border-radius:16px 4px 16px 4px;background:linear-gradient(140deg,var(--cx-glass-hi),transparent 45%),var(--cx-glass);-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);box-shadow:inset 0 1px 0 var(--cx-edge),var(--cx-shadow);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .25s,transform .25s cubic-bezier(.22,1,.36,1),border-color .2s}
+.cx-top.is-on{opacity:1;transform:none;pointer-events:auto}
+.cx-top:active{transform:scale(.94)}
+html[data-theme="light"] .cx-top{color:#007ba8}
+@media(hover:hover){.cx-top:hover{border-color:var(--cx-cyan)}.cx-top.is-on:hover{transform:translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){.cx-top{transition:opacity .15s;transform:none}}
+
+/* Homepage/header brand wordmark: keep FUNDED visibly rendered in both themes. */
+#root .cx-grad-text{
+  display:inline-block;
+  position:relative;
+  z-index:1;
+  isolation:isolate;
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+
+/* =========================================================
+   CAPTRIX RESPONSIVE HARDENING
+   Desktop-mode browsers on phones commonly expose a ~980px
+   layout viewport. The Tailwind lg breakpoint is set to 900px
+   above so those devices receive the desktop composition.
+   These rules also prevent flex/grid children from forcing
+   sections wider than their available column.
+   ========================================================= */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+#root,
+#root .dashboard-app {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#root *,
+#root *::before,
+#root *::after {
+  box-sizing: border-box;
+}
+
+#root .grid > *,
+#root .flex > * {
+  min-width: 0;
+}
+
+#root img,
+#root svg,
+#root video,
+#root canvas {
+  max-width: 100%;
+}
+
+.dashboard-app main {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 900px) {
+  /* Keep desktop-mode/tablet desktop layouts inside the viewport. */
+  .dashboard-app .dashboard-topbar,
+  .dashboard-app main {
+    min-width: 0;
+  }
+
+  .dashboard-app main > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Long tables/charts are allowed to scroll inside their own panel,
+     never expand the entire page horizontally. */
+  .dashboard-app table {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  /* Slightly tighter desktop spacing for ~980px desktop-mode viewports. */
+  .dashboard-app main {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  .dashboard-app .max-w-7xl {
+    width: 100%;
+  }
+
+  .dashboard-app .dashboard-account-switch {
+    max-width: min(38vw, 420px);
+  }
+
+  .dashboard-app .dashboard-account-select {
+    max-width: min(38vw, 360px);
+  }
+}
+
+/* Theme selector */
+.theme-selector-menu {
+  min-width: 12rem;
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  backdrop-filter: blur(18px) saturate(1.35);
+}
+
+html[data-theme="dark"] #root .theme-selector-menu {
+  background: rgba(18, 20, 28, .96) !important;
+}
+
+html[data-theme="light"] #root .theme-selector-menu {
+  background: rgba(255, 255, 255, .97) !important;
+}
+
+.theme-selector-option {
+  min-height: 48px;
+}
+
+@media (max-width: 640px) {
+  .theme-selector-menu {
+    right: -2px;
+    min-width: 11.5rem;
+  }
+}
+
