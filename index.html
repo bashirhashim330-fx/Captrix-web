@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=https://raw.githubusercontent.com/bashirhashim330-fx/Captrix-web/main/.github/workflows/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captrix Web</title>
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: #0b0c10;
+        color: #f3f6ff;
+        font-family: Inter, Arial, sans-serif;
+      }
+      body {
+        display: grid;
+        place-items: center;
+      }
+      .loader {
+        text-align: center;
+        padding: 1.5rem 2rem;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.04);
+        border-radius: 16px;
+      }
+      a {
+        color: #7dd3fc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <p>Loading Captrix website...</p>
+      <p>If it does not load, open <a href="https://raw.githubusercontent.com/bashirhashim330-fx/Captrix-web/main/.github/workflows/index.html">this file directly</a>.</p>
+    </div>
+    <script>
+      fetch('https://raw.githubusercontent.com/bashirhashim330-fx/Captrix-web/main/.github/workflows/index.html')
+        .then((response) => response.text())
+        .then((html) => {
+          document.open();
+          document.write(html);
+          document.close();
+        })
+        .catch(() => {
+          window.location.href = 'https://raw.githubusercontent.com/bashirhashim330-fx/Captrix-web/main/.github/workflows/index.html';
+        });
+    </script>
+  </body>
+</html>
