@@ -1,0 +1,132 @@
+/* =========================================================================
+   CAPTRIX — DASHBOARD SHELL (Layout pass v2, reference-inspired)
+   Compact top bar · mobile bottom tab bar · "More" bottom sheet ·
+   notifications popover · search palette · support FAB · skeletons.
+   All floating pieces are Tier 3 (see glass.css); the tab bar uses the
+   bar blur (18px) like the sticky header.
+   ========================================================================= */
+
+/* Round icon buttons in the top bar. NOTE: no `display` here — set it with
+   Tailwind (inline-flex / hidden / lg:inline-flex) so responsive hiding works. */
+.cx-iconbtn{width:40px;height:40px;border-radius:9999px;align-items:center;justify-content:center;flex:0 0 auto;
+  color:var(--cx-mute);background:transparent;border:1px solid transparent;transition:color .15s,background-color .15s,border-color .15s}
+.cx-iconbtn:hover,.cx-iconbtn[aria-expanded="true"]{color:var(--cx-ink);background:var(--cx-fill-1);border-color:var(--cx-line-1)}
+.cx-iconbtn--accent{color:#06121a!important;background:linear-gradient(var(--cx-light),#5be4ff,#11D6FF 45%,#1478FF)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 6px 18px -8px rgba(17,214,255,.65)}
+.cx-iconbtn--accent:hover{filter:brightness(1.08)}
+.cx-badge{position:absolute;top:2px;right:1px;min-width:17px;height:17px;padding:0 4px;border-radius:9999px;
+  background:#11D6FF;color:#06121a;font:700 10px/17px 'JetBrains Mono',monospace;text-align:center;box-shadow:0 0 0 2px var(--cx-bar)}
+
+/* Premium account picker — never delegates the popup to the browser/Android UI. */
+.cx-account-picker{position:relative;min-width:0}
+.cx-account-trigger{display:flex;align-items:center;gap:10px;min-width:0;width:min(520px,78vw);height:44px;padding:6px 10px 6px 8px;border:1px solid var(--cx-line-1);border-radius:15px 5px 15px 5px;background:linear-gradient(135deg,var(--cx-fill-1),var(--cx-fill-2));color:var(--cx-ink);box-shadow:inset 0 1px 0 var(--cx-rim-1),0 8px 24px -18px rgba(0,0,0,.7);transition:border-color .2s,box-shadow .2s,transform .2s}
+.cx-account-trigger:hover,.cx-account-picker.is-open .cx-account-trigger{border-color:rgba(17,214,255,.5);box-shadow:inset 0 1px 0 var(--cx-rim-1),0 0 0 3px rgba(17,214,255,.07),0 12px 28px -20px rgba(17,214,255,.55)}
+.cx-account-trigger:active{transform:translateY(1px)}
+.cx-account-trigger__mark{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:10px 4px 10px 4px;background:rgba(17,214,255,.1);color:var(--cx-cyan);border:1px solid rgba(17,214,255,.22)}
+.cx-account-trigger__copy{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;overflow:hidden}
+.cx-account-trigger__label{font:700 8px/1.1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--cx-mute)}
+.cx-account-trigger__value{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:600 11px/1.35 'JetBrains Mono',monospace;color:var(--cx-ink)}
+.cx-account-trigger__value span{color:var(--cx-mute);font-weight:500}
+.cx-account-trigger__chevron{margin-left:auto;flex:none;color:var(--cx-mute);transition:transform .2s}
+.cx-account-popover{position:absolute;left:0;top:calc(100% + 10px);z-index:70;width:min(430px,calc(100vw - 24px));overflow:hidden;border-radius:20px 6px 20px 6px!important;padding:0!important}
+.cx-account-popover__head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 16px 13px;border-bottom:1px solid var(--cx-line-1)}
+.cx-account-popover__eyebrow{display:block;font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--cx-cyan)}
+.cx-account-popover__head h3{margin:5px 0 0;font:700 15px/1.2 'Sora',sans-serif;color:var(--cx-ink)}
+.cx-account-popover__count{font:700 8px/1 'JetBrains Mono',monospace;color:var(--cx-mute);padding:7px 8px;border:1px solid var(--cx-line-1);border-radius:999px;white-space:nowrap}
+.cx-account-options{padding:8px;display:grid;gap:6px}
+.cx-account-option{width:100%;display:flex;align-items:center;gap:10px;padding:11px 10px;text-align:left;border:1px solid transparent;border-radius:13px 5px 13px 5px;background:transparent;color:var(--cx-ink);transition:background .18s,border-color .18s,transform .18s}
+.cx-account-option:hover{background:var(--cx-fill-1);border-color:var(--cx-line-1);transform:translateX(2px)}
+.cx-account-option.is-selected{background:linear-gradient(100deg,rgba(17,214,255,.11),rgba(20,120,255,.06));border-color:rgba(17,214,255,.3);box-shadow:inset 2px 0 0 var(--cx-cyan)}
+.cx-account-option__icon{width:32px;height:32px;display:grid;place-items:center;flex:none;border-radius:9px 3px 9px 3px;background:var(--cx-inset);border:1px solid var(--cx-line-1);color:var(--cx-mute)}
+.cx-account-option.is-selected .cx-account-option__icon{background:rgba(17,214,255,.12);border-color:rgba(17,214,255,.28);color:var(--cx-cyan)}
+.cx-account-option__body{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.cx-account-option__id{font:700 11px/1.25 'JetBrains Mono',monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cx-account-option__meta{font:500 9px/1.2 'JetBrains Mono',monospace;color:var(--cx-mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cx-account-option__meta b{color:var(--cx-cyan);font-weight:500}
+.cx-account-option__size{font:700 11px/1 'JetBrains Mono',monospace;color:var(--cx-cyan);white-space:nowrap}
+.cx-account-popover__foot{padding:10px 14px 12px;border-top:1px solid var(--cx-line-1);font:500 8px/1.35 'JetBrains Mono',monospace;color:var(--cx-mute)}
+@media(max-width:899px){
+  .cx-account-trigger{width:min(230px,58vw);height:40px;padding:5px 8px}
+  .cx-account-trigger__mark{width:27px;height:27px}
+  .cx-account-trigger__label{font-size:7px}
+  .cx-account-trigger__value{font-size:10px}
+  .cx-account-popover{position:fixed;left:12px;right:12px;bottom:calc(62px + env(safe-area-inset-bottom) + 12px);top:auto;width:auto;max-width:none;border-radius:22px 6px 22px 6px!important}
+  .cx-account-popover::before{content:"";display:block;width:42px;height:4px;border-radius:999px;background:var(--cx-line-1);margin:9px auto 0}
+  .cx-account-popover__head{padding-top:13px}
+}
+@media(max-width:430px){
+  .cx-account-trigger{width:min(178px,50vw)}
+  .cx-account-trigger__mark{display:none}
+  .cx-account-trigger__copy{padding-left:2px}
+  .cx-account-option{padding:12px 9px}
+}
+@media(prefers-reduced-motion:reduce){.cx-account-trigger,.cx-account-option,.cx-account-trigger__chevron{transition:none}}
+
+/* Pill: credits / account switcher */
+.cx-pill{align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:9999px;
+  background:var(--cx-fill-1);border:1px solid var(--cx-line-1);color:var(--cx-ink);font:500 12px 'JetBrains Mono',monospace;white-space:nowrap}
+.cx-pill--cyan{color:#11D6FF;background:rgba(17,214,255,.09);border-color:rgba(17,214,255,.28)}
+html[data-theme="light"] .cx-pill--cyan{color:#006a91;background:rgba(17,160,230,.09);border-color:rgba(0,106,145,.25)}
+.cx-acct{position:relative;min-width:0}
+.cx-acct select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.cx-acct:focus-within .cx-pill{outline:2px solid #11D6FF;outline-offset:2px}
+
+/* Segmented controls (theme switch, All/Unread) */
+.cx-seg{background:var(--cx-fill-1);border:1px solid var(--cx-line-1)}
+.cx-seg__btn{color:var(--cx-mute);transition:background-color .15s,color .15s}
+.cx-seg__btn:hover{color:var(--cx-ink)}
+.cx-seg__btn.is-on{color:var(--cx-ink);background:var(--cx-fill-3);box-shadow:inset 0 1px 0 var(--cx-rim-2),0 1px 3px rgba(0,0,0,.25)}
+html[data-theme="light"] .cx-seg__btn.is-on{color:#0a1a24;box-shadow:inset 0 1px 0 #fff,0 1px 4px rgba(20,70,120,.18)}
+
+/* Bottom tab bar (< 900px) */
+.cx-tabbar{background:var(--cx-bar);border-top:1px solid var(--cx-line-1);padding-bottom:env(safe-area-inset-bottom);
+  -webkit-backdrop-filter:blur(var(--cx-blur-bar)) saturate(150%);backdrop-filter:blur(var(--cx-blur-bar)) saturate(150%);
+  box-shadow:inset 0 1px 0 var(--cx-rim-1)}
+.cx-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:62px;color:var(--cx-mute);
+  font:500 11px Inter,system-ui,sans-serif;transition:color .15s}
+.cx-tab__icon{display:flex;align-items:center;justify-content:center;width:48px;height:28px;border-radius:9999px;transition:background-color .2s}
+.cx-tab.is-on{color:#11D6FF;font-weight:600}
+.cx-tab.is-on .cx-tab__icon{background:rgba(17,214,255,.12)}
+html[data-theme="light"] .cx-tab.is-on{color:#006a91}
+html[data-theme="light"] .cx-tab.is-on .cx-tab__icon{background:rgba(17,160,230,.12)}
+.cx-tab:focus-visible{outline:none}
+.cx-tab:focus-visible .cx-tab__icon{outline:2px solid #11D6FF;outline-offset:2px}
+
+/* Main content clears the tab bar + FAB on small screens */
+@media (max-width:899px){
+  .cx-main{padding-bottom:calc(62px + env(safe-area-inset-bottom) + 88px)!important}
+  .cx-fab{bottom:calc(62px + env(safe-area-inset-bottom) + 14px)}
+}
+@media (min-width:900px){ .cx-fab{bottom:24px;right:24px} }
+
+/* Bottom sheet */
+#root .cx-sheet{border-radius:26px 26px 0 0!important;border-bottom:0!important;animation:cxSheet .36s cubic-bezier(.32,.72,0,1);transition:transform .25s cubic-bezier(.32,.72,0,1)}
+@keyframes cxSheet{from{transform:translateY(100%)}to{transform:none}}
+.cx-navrow{color:var(--cx-mute);transition:background-color .15s,color .15s}
+.cx-navrow:hover{color:var(--cx-ink);background:var(--cx-fill-1)}
+.cx-navrow.is-on{color:#11D6FF;background:rgba(17,214,255,.09);box-shadow:inset 0 0 0 1px rgba(17,214,255,.22);font-weight:600}
+html[data-theme="light"] .cx-navrow.is-on{color:#006a91;background:rgba(17,160,230,.09);box-shadow:inset 0 0 0 1px rgba(0,106,145,.2)}
+
+/* Support FAB — Tier 3 small float with the brand gradient */
+.cx-fab{color:#06121a;background:linear-gradient(var(--cx-light),#6be8ff,#11D6FF 45%,#1478FF);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),var(--cx-shadow-3s),0 10px 28px -10px rgba(17,214,255,.55);transition:transform .2s,filter .2s}
+.cx-fab:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.cx-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* Welcome header accent bar on the equity figure */
+.cx-accent-bar{position:relative;padding-left:14px}
+.cx-accent-bar::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:3px;border-radius:3px;background:linear-gradient(180deg,#11D6FF,#1478FF)}
+
+/* Skeletons */
+.cx-bone{background:linear-gradient(90deg,var(--cx-fill-1) 0%,var(--cx-spec-2) 50%,var(--cx-fill-1) 100%);background-size:220% 100%;animation:cxBone 1.3s ease-in-out infinite}
+html[data-theme="light"] .cx-bone{background-image:linear-gradient(90deg,#e7edf4 0%,#f6f9fc 50%,#e7edf4 100%)}
+@keyframes cxBone{from{background-position:120% 0}to{background-position:-120% 0}}
+
+@media (prefers-reduced-motion:reduce){
+  .cx-bone{animation:none}
+  #root .cx-sheet{animation:none;transition:none}
+  .cx-fab,.cx-tab,.cx-tab__icon{transition:none}
+}
+
+/* Search input sits inside a focused dialog — the row itself is the focus affordance */
+#root .cx-search-input,#root .cx-search-input:focus,#root .cx-search-input:focus-visible{outline:none!important;box-shadow:none!important;border:0!important;background:transparent!important}

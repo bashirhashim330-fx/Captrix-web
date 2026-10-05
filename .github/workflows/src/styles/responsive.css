@@ -1,0 +1,233 @@
+/* =========================================================
+   CAPTRIX RESPONSIVE HARDENING
+   Desktop-mode browsers on phones commonly expose a ~980px
+   layout viewport. The Tailwind lg breakpoint is set to 900px
+   above so those devices receive the desktop composition.
+   These rules also prevent flex/grid children from forcing
+   sections wider than their available column.
+   ========================================================= */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+#root,
+#root .dashboard-app {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#root *,
+#root *::before,
+#root *::after {
+  box-sizing: border-box;
+}
+
+#root .grid > *,
+#root .flex > * {
+  min-width: 0;
+}
+
+#root img,
+#root svg,
+#root video,
+#root canvas {
+  max-width: 100%;
+}
+
+.dashboard-app main {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 900px) {
+  /* Keep desktop-mode/tablet desktop layouts inside the viewport. */
+  .dashboard-app .dashboard-topbar,
+  .dashboard-app main {
+    min-width: 0;
+  }
+
+  .dashboard-app main > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Long tables/charts are allowed to scroll inside their own panel,
+     never expand the entire page horizontally. */
+  .dashboard-app table {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  /* Slightly tighter desktop spacing for ~980px desktop-mode viewports. */
+  .dashboard-app main {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  .dashboard-app .max-w-7xl {
+    width: 100%;
+  }
+
+  .dashboard-app .dashboard-account-switch {
+    max-width: min(38vw, 420px);
+  }
+
+  .dashboard-app .dashboard-account-select {
+    max-width: min(38vw, 360px);
+  }
+}
+
+/* Theme selector (surface now comes from .cx-t3 in glass.css) */
+.theme-selector-menu {
+  min-width: 12rem;
+}
+
+.theme-selector-option {
+  min-height: 48px;
+}
+
+@media (max-width: 640px) {
+  .theme-selector-menu {
+    right: -2px;
+    min-width: 11.5rem;
+  }
+}
+
+
+
+/* ========================================================================
+   MOBILE TOPBAR HARDENING
+   The premium account picker must share the row with New Challenge,
+   Search, Credits and Notifications without ever overflowing into them.
+   ======================================================================== */
+@media (max-width: 899px) {
+  .dashboard-topbar {
+    gap: 4px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-topbar > div:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: visible;
+    gap: 5px !important;
+  }
+
+  .dashboard-topbar > div:first-child > button {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+  }
+
+  .dashboard-topbar > div:first-child > div:nth-child(2) {
+    flex: 1 1 112px;
+    min-width: 0;
+    width: auto;
+    max-width: 112px;
+  }
+
+  .cx-account-picker,
+  .cx-account-trigger {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .cx-account-trigger {
+    height: 40px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .dashboard-topbar > div:last-child {
+    flex: 0 0 auto;
+    gap: 4px !important;
+  }
+
+  .dashboard-topbar .cx-iconbtn {
+    width: 34px;
+    height: 38px;
+    flex: 0 0 34px;
+  }
+
+  .dashboard-topbar .cx-iconbtn--accent {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  }
+
+  .dashboard-topbar .cx-pill--cyan {
+    min-width: 68px;
+    width: 68px;
+    height: 38px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media (max-width: 419px) {
+  .dashboard-topbar {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    gap: 3px !important;
+  }
+
+  .dashboard-topbar > div:first-child {
+    gap: 3px !important;
+  }
+
+  .dashboard-topbar > div:first-child > button {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .dashboard-topbar > div:first-child > div:nth-child(2) {
+    max-width: 104px;
+    flex-basis: 104px;
+  }
+
+  .dashboard-topbar .cx-iconbtn--accent {
+    width: 38px;
+    flex-basis: 38px;
+  }
+
+  .dashboard-topbar .cx-iconbtn {
+    width: 30px;
+    height: 36px;
+    flex-basis: 30px;
+  }
+
+  .dashboard-topbar .cx-pill--cyan {
+    width: 62px;
+    min-width: 62px;
+  }
+
+  /* Keep search visible in the compact layout when the remaining controls fit. */
+  .dashboard-topbar button[aria-label="Search the dashboard"] {
+    display: inline-flex !important;
+  }
+
+  .dashboard-topbar .cx-account-trigger__mark {
+    display: none;
+  }
+
+  .dashboard-topbar .cx-account-trigger__copy {
+    padding-left: 2px;
+  }
+
+  .dashboard-topbar .cx-account-trigger__label {
+    font-size: 6.5px;
+  }
+
+  .dashboard-topbar .cx-account-trigger__value {
+    font-size: 9px;
+  }
+}
